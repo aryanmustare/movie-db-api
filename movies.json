@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "title": "Inception",
+        "director": "Nolan",
+        "year": 2010
+    },
+    {
+        "id": 2,
+        "title": "The Dark Knight",
+        "director": "Nolan",
+        "year": 2008
+    },
+    {
+        "id": 3,
+        "title": "Predestination",
+        "director": "Michael Spierig",
+        "year": 2014
+    },
+    {
+        "id": 4,
+        "title": "Fight Club",
+        "director": "David",
+        "year": 1999
+    },
+    {
+        "title": "test",
+        "director": "test",
+        "year": 2000,
+        "id": 5
+    },
+    {
+        "title": "test2",
+        "director": "test2",
+        "year": 2000,
+        "id": 6
+    }
+]
