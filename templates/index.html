@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie API</title>
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            white-space: pre-wrap; 
+        }
+
+        .input {
+            margin: 10px 0;
+            padding: 8px;
+            width: 300px;
+        }
+
+        .formc {
+            margin: 20px 0;
+        }
+
+        .response-info {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e8f4e8;
+            border: 1px solid #ddd;
+        }
+
+        .m-box {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .m-box h2 {
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Movie API</h1>
+        
+    </header>
+
+    <section>
+        <h2>API Endpoints:</h2>
+        <ul>
+            <li><strong>GET /movies</strong> - Get list of all movies.</li>
+            <li><strong>GET /movies/{id}</strong> - Get movie by ID.</li>
+            <li><strong>GET /movies/director/{director}</strong> - Get movies by director.</li>
+            <li><strong>GET /movies/year/{year}</strong> - Get movies by year.</li>
+            <li><strong>GET /movies/count</strong> - Get Total count of all movies.</li>
+            <li><strong>POST /movies</strong> - Add a new movie (requires data of -title, director, year).</li>
+            <li><strong>POST /movies/delete</strong> - Delete movie by id (test this by poostman)</li>
+            
+        </ul>
+    
+        <h2>Test the API:</h2>
+        <button class="button" onclick="getmovies()">Get All Movies</button>
+        <button class="button" onclick="getByid()">Get Movie By ID</button>
+        <button class="button" onclick="getBydir()">Get Movies By Director</button>
+        <button class="button" onclick="getBy_year()">Get Movies By Year</button>
+        <button class="button" onclick="getTotalcount()">Get Total Count</button>
+    
+        <div class="response-info" id="response-info">
+            <h3>Response Details:</h3>
+            <p><strong>API Called:</strong> <span id="api-url"></span></p>
+            <pre id="response-details"></pre>
+        </div>
+    
+        <div class="result" id="result"></div> 
+    
+        
+        <div class="m-box">
+            <h2>Add a New Movie (POST Request):</h2>
+            <div class="formc">
+                <input type="text" id="movie-title" class="input" placeholder="Movie Title">
+                <input type="text" id="movie-director" class="input" placeholder="Director">
+                <input type="number" id="movie-year" class="input" placeholder="Release Year">
+                <button class="button" onclick="postmovie()">Add Movie</button>
+            </div>
+        </div>
+    
+    </section>
+
+ 
+
+    <script>
+        //update url 
+        const apiUrl = "http://127.0.0.1:5000"; 
+
+        
+        function getmovies() {
+            const url = `${apiUrl}/movies`;
+            fetch(url)
+                .then(response => {
+                    display_metadata(url, response);
+                    return response.json();
+                })
+                .then(data => {
+                    displayResult(data);
+                })
+                .catch(error => {
+                    displayError(error);
+                });
+        }
+
+       
+        function getByid() {
+            const movieId = prompt("Enter the movie ID:");
+            const url = `${apiUrl}/movies/${movieId}`;
+            fetch(url)
+                .then(response => {
+                    display_metadata(url, response);
+                    return response.json();
+                })
+                .then(data => {
+                    displayResult(data);
+                })
+                .catch(error => {
+                    displayError(error);
+                });
+        }
+
+   
+        function getBydir() {
+            const director = prompt("Enter the director name:");
+            const url = `${apiUrl}/movies/director/${director}`;
+            fetch(url)
+                .then(response => {
+                    display_metadata(url, response);
+                    return response.json();
+                })
+                .then(data => {
+                    displayResult(data);
+                })
+                .catch(error => {
+                    displayError(error);
+                });
+        }
+
+      
+        function getBy_year() {
+            const year = prompt("Enter the year:");
+            const url = `${apiUrl}/movies/year/${year}`;
+            fetch(url)
+                .then(response => {
+                    display_metadata(url, response);
+                    return response.json();
+                })
+                .then(data => {
+                    displayResult(data);
+                })
+                .catch(error => {
+                    displayError(error);
+                });
+        }
+
+      
+        function getTotalcount() {
+            const url = `${apiUrl}/movies/count`;
+            fetch(url)
+                .then(response => {
+                    display_metadata(url, response);
+                    return response.json();
+                })
+                .then(data => {
+                    displayResult(data);
+                })
+                .catch(error => {
+                    displayError(error);
+                });
+        }
+
+        
+        function postmovie() {
+            const title = document.getElementById('movie-title').value;
+            const director = document.getElementById('movie-director').value;
+            const year = parseInt(document.getElementById('movie-year').value, 10);
+
+            if (!title || !director || !year) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const movieData = {
+                title: title,
+                director: director,
+                year: year
+            };
+
+            const url = `${apiUrl}/movies`;
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(movieData)
+            })
+            .then(response => {
+                display_metadata(url, response);
+                return response.json();
+            })
+            .then(data => {
+                displayResult(data);
+            })
+            .catch(error => {
+                displayError(error);
+            });
+        }
+
+        
+        function displayResult(data) {
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "<pre>" + JSON.stringify(data, null, 2) + "</pre>";
+        }
+
+        
+        function displayError(error) {
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = `<p style="color: red;">Error: ${error}</p>`;
+        }
+
+        
+        function display_metadata(url, response) {
+            const responseDiv = document.getElementById("response-details");
+            const statusCode = response.status;
+            const statusText = response.statusText;
+            const headers = JSON.stringify([...response.headers]);
+
+            document.getElementById("api-url").textContent = url;
+
+            responseDiv.innerHTML = `
+                Status Code: ${statusCode} - ${statusText}\n
+                Headers: ${headers}\n\n
+            `;
+        }
+    </script>
+</body>
+</html>
